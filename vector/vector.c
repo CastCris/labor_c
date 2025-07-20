@@ -1,3 +1,5 @@
+#include"vector.h"
+
 struct Vector{
 	void** items;
 	size_t item_size;
