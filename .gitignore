@@ -1,5 +1,6 @@
 *
-!.gitignore
+!/.gitignore
 !*/
 !*.c
 !*.h
+!/makefile
