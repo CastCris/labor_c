@@ -2,9 +2,13 @@
 #define VECTOR_H
 
 #include<stdio.h>
+#include<stdint.h>
 #include<stdlib.h>
+#include<string.h>
 //
 #define VCT_LENGTH_INCRASE(vct_ref) (vct_ref->vector_length*=2)
+
+#define VCT_MAX_SIZE SIZE_MAX
 //
 struct Vector{
 	void** items;
@@ -15,6 +19,7 @@ struct Vector{
 };
 // Check vector functions
 void 	vct_size_check(struct Vector*vct_ref);
+void 	vct_item_size_check(struct Vector*vct_ref,size_t item_size);
 // CRUD operations
 // Create
 struct 	Vector*	vct_create(size_t vct_size,size_t item_size);

@@ -1,6 +1,7 @@
 BUILD_DIR=./build
 
-SRC_DIR=vector
+SRC_DIR=vector \
+		develop
 
 SRC_C=$(shell find ${SRC_DIR} -type f -name '*.c')
 SRC_O=${SRC_C:%=${BUILD_DIR}/%.o}
@@ -10,7 +11,7 @@ INC_DIR=$(shell find ${SRC_DIR} -type d)
 INC_FLAGS=$(addprefix -I,${INC_DIR})
 
 CC=gcc
-CFLAGS=-Wall -Wextra -MMD -MP ${INC_FLAGS}
+CFLAGS=-g -Wall -Wextra -MMD -MP ${INC_FLAGS}
 
 TARGET=main
 
@@ -22,7 +23,7 @@ ${TARGET}:${SRC_O}
 
 ${BUILD_DIR}/%.c.o:%.c
 	mkdir -p $(dir $@)
-	${CC} ${CFLAGS} $< -o $@
+	${CC} ${CFLAGS} -c $< -o $@
 
 .PHONY:clean
 clean:

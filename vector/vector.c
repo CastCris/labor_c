@@ -7,11 +7,23 @@ struct Vector{
 	size_t vector_index;
 	size_t vector_length;
 };
+// Check Vector functions
+void vct_size_check(struct Vector*vct_ref){
+	if(vct_index(vct_ref)>=vct_length(vct_ref)){
+		VCT_LENGTH_INCRASE(vct_ref);
+		vct_ref->items=realloc(vct_ref->items,vct_length(vct_ref)*sizeof(void*));
+	}
+}
+void vct_item_size_check(struct Vector*vct_ref,size_t item_size){
+	if(vct_item_size(vct_ref)<item_size){
+		vct_ref->item_size=item_size;
+	}
+}
 // CRUD operations
 // Create
 struct 	Vector*	vct_create(size_t vct_size,size_t item_size){
 	struct Vector*vct_new=malloc(sizeof(struct Vector));
-	vct_new->items=malloc(item_size*vct_size);
+	vct_new->items=malloc(sizeof(void*)*vct_size);
 	vct_new->item_size=item_size;
 
 	vct_new->vector_index=0;
@@ -33,42 +45,40 @@ size_t 	vct_length(struct Vector*vct_ref){
 	return vct_ref->vector_length;
 }
 // Update
-void vct_size_check(struct Vector*vct_ref){
-	if(vct_index(vct_ref)>=vct_length(vct_ref)){
-		VCT_LENGTH_INCRASE(vct_ref);
-		vct_ref->items=realloc(vct_ref->items,vct_length(vct_ref)*vct_item_size(vct_ref));
-	}
-}
 
 void vct_append(struct Vector*vct_ref,void*item,size_t item_size){
 	vct_size_check(vct_ref);
+	vct_item_size_check(vct_ref,item_size);
 
-	(*vct_ref->items+vct_index(vct_ref))=malloc(item_size);
-	memcpy((*vct_ref->items+vct_index(vct_ref)),item,item_size);
+	vct_ref->items[vct_index(vct_ref)]=malloc(vct_item_size(vct_ref));
+	memcpy(vct_ref->items[vct_index(vct_ref)],item,vct_item_size(vct_ref));
 	++vct_ref->vector_index;
 }
 void vct_insert(struct Vector*vct_ref,size_t index,void*item,size_t item_size){
 	vct_size_check(vct_ref);
+	vct_item_size_check(vct_ref,item_size);
 
 	for(size_t i=0;i<vct_index(vct_ref)-index;++i)
-		(*vct_ref->items+vct_index(vct_ref)-i)=(*vct_ref->items+vct_index(vct_ref)-1-i);
+		vct_ref->items[vct_index(vct_ref)-i]=vct_ref->items[vct_index(vct_ref)-i-1];
 	//
-	free((*vct_ref->items+index));
-	(*vct_ref->items+index)=malloc(item_size);
+	free(vct_ref->items[index]);
+	vct_ref->items[index]=malloc(vct_item_size(vct_ref));
 	//
-	memcpy((*vct_ref->items+index),item,item_size);
+	memcpy(vct_ref->items[index],item,vct_item_size(vct_ref));
 	++vct_ref->vector_index;
 }
 void vct_replace(struct Vector*vct_ref,size_t index,void*item,size_t item_size){
-	free((*vct_ref->items+index));
-	(*vct_ref->items+index)=malloc(item_size);
+	vct_item_size_check(vct_ref,item_size);
+
+	free(vct_ref->items[index]);
+	vct_ref->items[index]=malloc(vct_item_size(vct_ref));
 	//
-	memcpy((*vct->items+index),item,item_size);
+	memcpy(vct_ref->items[index],item,vct_item_size(vct_ref));
 }
 // Delete
 void vct_delete(struct Vector*vct_ref){
 	for(size_t i=0;i<vct_index(vct_ref);++i)
-		free(*(vct_ref->items+i));
+		free(vct_ref->items[i]);
 	free(vct_ref->items);
 	free(vct_ref);
 }
