@@ -32,7 +32,7 @@ void	vct_size_check(struct Vector*vct_ref){
 void*	vct_item(struct Vector*vct_ref,size_t index){
 	return vctItem_item(vct_ref->items[index]);
 }
-void 	vct_item_get(struct Vector*vct_ref,void**src,size_t index){
+void 	vct_item_get(struct Vector*vct_ref,size_t index,void**src){
 	*src=malloc(vct_item_size(vct_ref,index));
 	memcpy(*src,vct_item(vct_ref,index),vct_item_size(vct_ref,index));
 }
@@ -66,8 +66,43 @@ void vct_replace(struct Vector*vct_ref,size_t index,void*item,size_t item_size){
 	vctItem_replace(vct_ref->items[index],item,item_size);
 }
 // Delete
+void*vct_pop(struct Vector*vct_ref,size_t index){
+	void*item;
+	vct_item_get(vct_ref,index,&item);
+	vct_remove(vct_ref,index);
+
+	return item;
+}
+void vct_popup(struct Vector*vct_ref,size_t index,void**src){
+	vct_item_get(vct_ref,index,src);
+	vct_remove(vct_ref,index);
+}
+void vct_clean(struct Vector*vct_ref){
+	for(size_t i=-1;i<vct_index(vct_ref);++i){
+		free(vct_ref->items[i]);
+		vct_ref->items[i]=NULL;
+	}
+	vct_ref->vector_index=0;
+}
+void vct_reset(struct Vector**vct_ref){
+	for(size_t i=0;i<vct_length(*vct_ref);++i)
+		free((*vct_ref)->items[i]);
+	free((*vct_ref)->items);
+	free(*vct_ref);
+
+	*vct_ref=vct_create(VCT_LENGTH_MIN);
+}
+void vct_remove(struct Vector*vct_ref,size_t index){
+	for(size_t i=0;i<vct_index(vct_ref)-index;++i)
+		vct_ref->items[index+i]=vct_ref->items[index+i+1];
+
+	free(vct_ref->items[vct_index(vct_ref)]);
+	vct_ref->items[vct_index(vct_ref)]=NULL;
+
+	--vct_ref->vector_index;
+}
 void vct_delete(struct Vector*vct_ref){
-	for(size_t i=0;i<vct_index(vct_ref);++i)
+	for(size_t i=0;i<vct_length(vct_ref);++i)
 		free(vct_ref->items[i]);
 	free(vct_ref->items);
 	free(vct_ref);

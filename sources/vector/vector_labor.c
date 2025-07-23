@@ -29,8 +29,18 @@ void vct_insert_str(struct Vector*vct_ref,size_t amount_str,size_t index){
 void vct_str_display(struct Vector*vct_ref){
 	for(size_t i=0;i<vct_index(vct_ref);++i){
 		char*copy_str;
-		vct_item_get(vct_ref,(void**)&copy_str,i);
+		vct_item_get(vct_ref,i,(void**)&copy_str);
 		printf("%s ",copy_str);
 	}
 	printf("\n");
+}
+void vct_set_display(struct Vector*vct_ref){
+	for(size_t i=0;i<vct_length(vct_ref);++i){
+		printf("(%li ",i);
+		if(vct_item(vct_ref,i)){
+			printf("FILL) ");
+			continue;
+		}
+		printf("NULL) ");
+	}
 }

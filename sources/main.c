@@ -5,15 +5,11 @@
 int main(){
 	struct Vector*tst=vct_create(1);
 	vct_fill_str(tst,10);
-	vct_str_display(tst);
 
-	char my_str[]="Hello World!";
-	vct_insert(tst,vct_index(tst),(void*)my_str,sizeof(my_str));
-	vct_insert(tst,0,(void*)my_str,sizeof(my_str));
 	vct_str_display(tst);
-
-	vct_insert_str(tst,10,vct_index(tst));
-	vct_str_display(tst);
+	vct_clean(tst);
+	vct_set_display(tst);
+	printf("\n");
 
 	return 0;
 }

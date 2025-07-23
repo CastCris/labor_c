@@ -15,5 +15,6 @@ void vct_fill_str(struct Vector*vct_ref,size_t amount_str);
 void vct_insert_str(struct Vector*vct_ref,size_t amount_str,size_t index);
 // Display vector functions
 void vct_str_display(struct Vector*vct_ref);
+void vct_set_display(struct Vector*vct_ref);
 
 #endif
