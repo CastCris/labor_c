@@ -1,7 +1,6 @@
-BUILD_DIR=./build
+BUILD_DIR=./.bin
 
-SRC_DIR=vector \
-		develop
+SRC_DIR=sources
 
 SRC_C=$(shell find ${SRC_DIR} -type f -name '*.c')
 SRC_O=${SRC_C:%=${BUILD_DIR}/%.o}

@@ -1,30 +1,15 @@
 #include<stdio.h>
 #include"vector.h"
 //
-void vct_display_int(struct Vector*vct_ref){ // int vector
-	for(size_t i=0;i<vct_index(vct_ref);++i)
-		printf("%i ",*(int*)vct_item(vct_ref,i));
-	printf("\n");
-}
-void vct_display_str(struct Vector*vct_ref){
-	for(size_t i=0;i<vct_index(vct_ref);++i){
-		char copy_str[51];
-		strcpy(copy_str,vct_item(vct_ref,i));
-		printf("%s\n",copy_str);
-	}
-	printf("\n");
-}
-//
 int main(){
-	struct Vector*tst=vct_create(10,sizeof(char*)*51);
-	for(size_t i=0;i<26;++i){
-		char my_str[51]={};
-		for(int j=0;j<50;++j)
-			my_str[j]=(char)(i+j)%26+65;
-		my_str[51]='\0';
-		vct_append(tst,(void*)&my_str,strlen(my_str));
-	}
-	vct_display_str(tst);
+	struct Vector*tst=vct_create(1);
+	printf("%lx",sizeof(double));
+	/*
+	printf("%lx\n",SIZE_MAX);
+	vct_fill_str(tst,10);
+	vct_str_display(tst);
+	*/
+
 	return 0;
 }
 /*
