@@ -1,5 +1,4 @@
 BUILD_DIR=./.bin
-
 SRC_DIR=sources
 
 SRC_C=$(shell find ${SRC_DIR} -type f -name '*.c')
@@ -10,7 +9,7 @@ INC_DIR=$(shell find ${SRC_DIR} -type d)
 INC_FLAGS=$(addprefix -I,${INC_DIR})
 
 CC=gcc
-CFLAGS=-g -Wall -Wextra -MMD -MP ${INC_FLAGS}
+CFLAGS=-g -Wall -Wextra -MMD -MP ${INC_FLAGS} -DEXTRA
 
 TARGET=main
 
