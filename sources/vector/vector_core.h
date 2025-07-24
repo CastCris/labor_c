@@ -10,7 +10,43 @@
 #define VCT_LENGTH_INCRASE(vct_ref) (vct_ref->vector_length*=2)
 #define VCT_LENGHT_MAX 1e+9
 #define VCT_LENGTH_MIN 1
-//#define VCT_INDEX(vct_ref) (vct_ref->vector_index)
+
+
+// GET FUNCTIONS
+#define VCT_ITEM(vct_ref,index) \
+	(!(vct_ref->items[index])?NULL:vctItem_item(vct_ref->items[index]))
+
+#define VCT_ITEM_PICK(vct_ref,index,src) \
+	(!(VCT_ITEM(vct_ref,index))?NULL:vct_item_get(vct_ref,index,(void*)&src))
+
+#define VCT_ITEM_SIZE(vct_ref,index) \
+	(!(VCT_ITEM(vct_ref,index))?-1:vctItem_item_size(vct_ref->items[index]))
+
+#define VCT_INDEX(vct_ref) (vct_ref->vector_index)
+#define VCT_LENGTH(vct_ref) (vct_ref->vector_length)
+
+// UPT FUNCTIONS
+#define VCT_APPEND(vct_ref,item,item_size) \
+	(vct_append(vct_ref,item,item_size))
+
+#define VCT_INSERT(vct_ref,index,item,item_size) \
+	(vct_insert(vct_ref,index,item,item_size))
+
+#define VCT_REPLACE(vct_ref,index,item,item_size) \
+	(vct_replace(vct_ref,index,item,item_size))
+
+// DEL FUNCTIONS
+#define VCT_POP(vct_ref,index) \
+	(!(VCT_ITEMS(vct_ref,index))?NULL:vct_pop(vct_ref,index));
+
+#define VCT_POPUP(vct_ref,index,src) \
+	(!(VCT_ITEMS(vct_ref,index))?NULL:vct_popup(vct_ref,index,(void*)&srd))
+
+#define VCT_WIPE(vct_ref) (vct_delete(vct_ref))
+#define VCT_WASH(vct_ref) (vct_clean(vct_ref))
+#define VCT_REBOOT(vct_ref) (vct_reset(vct_ref))
+#define VCT_REMOVE(vct_ref,index) (vct_remove(vct_ref,index))
+
 //
 // CRUD operations
 // Create
@@ -29,11 +65,11 @@ void 	vct_insert(struct Vector*vct_ref,
 void 	vct_replace(struct Vector*vct_ref
 		,size_t index,void*item,size_t item_size);
 // Delete
+void*	vct_pop(struct Vector*vct_ref,size_t index);
+void 	vct_popup(struct Vector*vct_ref,size_t index,void**src);
 void 	vct_clean(struct Vector*vct_ref);
 void 	vct_reset(struct Vector**vct_ref);
 void 	vct_remove(struct Vector*vct_ref,size_t index);
 void 	vct_delete(struct Vector*vct_ref);
-void*	vct_pop(struct Vector*vct_ref,size_t index);
-void 	vct_popup(struct Vector*vct_ref,size_t index,void**src);
 //---------------------------------------------------------------------------//
 #endif

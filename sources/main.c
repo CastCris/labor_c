@@ -6,10 +6,10 @@ int main(){
 	struct Vector*tst=vct_create(1);
 	vct_fill_str(tst,10);
 
-	//vct_str_display(tst);
-	//vct_clean(tst);
-	//vct_set_display(tst);
-	//printf("\n");
+	vct_str_display(tst);
+	vct_clean(tst);
+	vct_set_display(tst);
+	printf("\n");
 
 	return 0;
 }
