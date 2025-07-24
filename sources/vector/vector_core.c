@@ -1,12 +1,5 @@
-#include"vector.h"
+#include"vector_core.h"
 //---------------------------------------------------------------------------//
-struct 	Vector{
-	struct VectorItem**
-			items;
-
-	size_t	vector_index;
-	size_t	vector_length;
-};
 // CRUD operations
 // Create
 struct 	Vector*	vct_create(size_t vct_size){

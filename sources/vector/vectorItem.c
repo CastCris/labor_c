@@ -1,10 +1,5 @@
 #include"vectorItem.h"
 //
-struct VectorItem{
-	void*	item;
-	size_t	item_size;
-};
-//
 struct VectorItem*vctItem_create(void*item,size_t item_size){
 	struct VectorItem*vct_item_new=malloc(sizeof(struct VectorItem));
 	vct_item_new->item=malloc(item_size);

@@ -1,7 +1,7 @@
 #ifndef VECTOR_LABOR_H
 #define VECTOR_LABOR_H
 
-#include"vector.h"
+#include"vector_core.h"
 #include<stdio.h>
 
 #define VCT_TEST_STR_SIZE 1
