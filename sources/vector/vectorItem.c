@@ -24,6 +24,12 @@ void 	vctItem_replace(struct VectorItem*vct_item_ref,void*item,size_t item_size)
 	memcpy(vct_item_ref->item,item,vctItem_item_size(vct_item_ref));
 }
 //
+/*
+void	vctItem_delete(struct VectorItem**vct_item_ref){
+	free((*vct_item_ref)->item);
+	free((*vct_item_ref));
+}
+*/
 void	vctItem_delete(struct VectorItem*vct_item_ref){
 	free(vct_item_ref->item);
 	free(vct_item_ref);

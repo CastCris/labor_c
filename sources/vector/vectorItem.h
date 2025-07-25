@@ -3,6 +3,8 @@
 //
 #include<stdlib.h>
 #include<string.h>
+
+#include<stdio.h>
 //
 struct VectorItem{
 	void*	item;
@@ -17,6 +19,7 @@ size_t	vctItem_item_size(struct VectorItem*vct_item_ref);
 void 	vctItem_replace(struct VectorItem*vct_item_ref,void*item,
 		size_t item_size);
 //
+//void	vctItem_delete(struct VectorItem**vct_item_ref);
 void	vctItem_delete(struct VectorItem*vct_item_ref);
 
 #endif

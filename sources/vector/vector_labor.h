@@ -4,7 +4,7 @@
 #include"vector_core.h"
 #include<stdio.h>
 
-#define VCT_TEST_STR_SIZE 1
+#define VCT_TEST_STR_SIZE 10
 #define VCT_TEST_CHAR_GEN(char_value)((char_value)%26+65)
 //---------------------------------------------------------------------------//
 // Generator of arbitrary str values
