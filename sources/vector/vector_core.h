@@ -14,16 +14,16 @@
 
 // GET FUNCTIONS
 #define VCT_INDEX(vct_ref) \
-	((vct_ref)->vector_index)
+	(vct_index((vct_ref)))
 #define VCT_LENGTH(vct_ref) \
-	((vct_ref)->vector_length)
+    (vct_length((vct_ref)))
 
 #define VCT_ITEM(vct_ref,index) \
 	vctITEM_ITEM((vct_ref)->items[index])
 
 #define VCT_ITEM_SIZE(vct_ref,index) \
 	((VCT_ITEM_EMPTY((vct_ref),(index)))?0:\
-	 vctITEM_ITEM_SIZE((vct_ref),(index)))
+	 vctITEM_ITEM_SIZE((vct_ref)->items[(index)]))
 
 #define VCT_ITEM_PICK(vct_ref,index,src) \
 	(VCT_ITEM_EMPTY((vct_ref),(index))?NULL:\
@@ -64,28 +64,58 @@
 //
 // CRUD operations
 // Create
-struct 	Vector*	vct_create(size_t vct_size);
+struct 	Vector*
+vct_create(size_t vct_size);
 // Read
-void*	vct_item(struct Vector*vct_ref,size_t index);
-void 	vct_item_get(struct Vector*vct_ref,size_t index,void**src);
-size_t 	vct_item_size(struct Vector*vct_ref,size_t index);
+static inline void*
+vct_item(struct Vector*vct_ref,size_t index){
+	return vctItem_item(vct_ref->items[index]);
+}
+static inline size_t 
+vct_item_size(struct Vector*vct_ref,size_t index){
+	return vctItem_item_size(vct_ref->items[index]);
+}
+static inline size_t 
+vct_index(struct Vector*vct_ref){
+	return vct_ref->vector_index;
+}
+static inline size_t 
+vct_length(struct Vector*vct_ref){
+	return vct_ref->vector_length;
+}
+size_t 
+vct_size_t(struct Vector*vct_ref);
 
-size_t 	vct_index(struct Vector*vct_ref);
-size_t 	vct_length(struct Vector*vct_ref);
-
-size_t 	vct_size_t(struct Vector*vct_ref);
+void 
+vct_item_get(struct Vector*vct_ref,size_t index,void**src);
 // Update
-void 	vct_append(struct Vector*vct_ref,void*item,size_t item_size);
-void 	vct_insert(struct Vector*vct_ref,
-		size_t index,void*item,size_t item_size);
-void 	vct_replace(struct Vector*vct_ref
-		,size_t index,void*item,size_t item_size);
+void
+vct_append(struct Vector*vct_ref,void*item,size_t item_size);
+
+void 			
+vct_insert(struct Vector*vct_ref, size_t index,void*item,size_t item_size);
+
+static inline void 	
+vct_replace(struct Vector*vct_ref,size_t index,void*item,size_t item_size){
+	vctItem_replace(vct_ref->items[index],item,item_size);
+}
 // Delete
-void*	vct_pop(struct Vector*vct_ref,size_t index);
-void 	vct_popup(struct Vector*vct_ref,size_t index,void**src);
-void 	vct_clean(struct Vector*vct_ref);
-void 	vct_reset(struct Vector**vct_ref);
-void 	vct_remove(struct Vector*vct_ref,size_t index);
-void 	vct_delete(struct Vector**vct_ref);
+void*
+vct_pop(struct Vector*vct_ref,size_t index);
+
+void 
+vct_popup(struct Vector*vct_ref,size_t index,void**src);
+
+void 
+vct_clean(struct Vector*vct_ref);
+
+void 
+vct_reset(struct Vector**vct_ref);
+
+void 
+vct_remove(struct Vector*vct_ref,size_t index);
+
+void 
+vct_delete(struct Vector**vct_ref);
 //---------------------------------------------------------------------------//
 #endif

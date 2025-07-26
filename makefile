@@ -9,7 +9,7 @@ INC_DIR=$(shell find ${SRC_DIR} -type d)
 INC_FLAGS=$(addprefix -I,${INC_DIR})
 
 CC=gcc
-CFLAGS=-fsanitize=address -g -Wall -Wextra -MMD -MP ${INC_FLAGS} -DEXTRA
+CFLAGS=-fsanitize=address -g -Wall -Wextra -MMD -MP ${INC_FLAGS} -DEXTRA -DSAFE
 
 TARGET=root
 
