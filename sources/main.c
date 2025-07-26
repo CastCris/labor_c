@@ -18,11 +18,11 @@ int main(){
 	char*replace=malloc(sizeof(char)*sizeof(tst_str)/sizeof(tst_str[0]));
 	strcpy(replace,tst_str);
 	//printf("%s %li\n",replace,strlen(replace));
-	//VCT_REPLACE(tst,0,replace,strlen(replace)+1);
+	VCT_REPLACE(tst,0,replace,strlen(replace)+1);
 	// Static string
 	char hello[]="Hello World!";
-	//VCT_APPEND(tst,hello,sizeof(hello));
-	//VCT_INSERT(tst,0,hello,sizeof(hello));
+	VCT_APPEND(tst,hello,sizeof(hello));
+	VCT_INSERT(tst,0,hello,sizeof(hello));
 
 	// GET FUNCTIONS
 	printf("GET FUNCTIONS\n");
@@ -42,8 +42,7 @@ int main(){
 	printf("\n");
 
 	// POP FUNTIONS
-	/*
-	printf("POPUP FUNCTION\n");
+	printf("POP UP FUNCTION\n");
 	char*item=VCT_POP(tst,0);
 	item[0]='K';
 	printf("%s\n",item);
@@ -52,8 +51,8 @@ int main(){
 	char*item2;
 	VCT_POPUP(tst,0,item2);
 	printf("%s\n",item2);
-	*/
 
+	// DEL FUNCTIONS
 	VCT_WASH(tst);
 	vct_set_display(tst);
 	printf("\n");
@@ -64,18 +63,11 @@ int main(){
 
 	VCT_WIPE(tst);
 
-	//free(item);
-	//free(item2);
+	free(item);
+	free(item2);
 	free(my_str);
 	free(my_str2);
 	free(replace);
-
-	/* ERROR -- segmental fault
-	vct_str_display(tst);
-	vct_clean(tst);
-	vct_set_display(tst);
-	printf("\n");
-	*/
 
 	return 0;
 }

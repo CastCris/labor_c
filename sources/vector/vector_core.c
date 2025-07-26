@@ -75,42 +75,34 @@ void 	vct_popup(struct Vector*vct_ref,size_t index,void**src){
 	vct_item_get(vct_ref,index,src);
 	vct_remove(vct_ref,index);
 }
+void 	vct_remove(struct Vector*vct_ref,size_t index){
+	vctITEM_DELETE(vct_ref->items[index]);
+	for(size_t i=0;i<vct_index(vct_ref)-index-1;++i)
+		vct_ref->items[index+i]=vct_ref->items[index+i+1];
+	vct_ref->items[VCT_INDEX(vct_ref)-1]=NULL;
+
+	--vct_ref->vector_index;
+}
+
+
 void 	vct_clean(struct Vector*vct_ref){
-	for(size_t i=0;i<vct_index(vct_ref);++i){
-		free(vct_ref->items[i]);
-		vct_ref->items[i]=NULL;
-	}
+	for(size_t i=0;i<vct_index(vct_ref);++i)
+		vctITEM_ERASE(vct_ref->items[i]);
 	vct_ref->vector_index=0;
 }
 void 	vct_reset(struct Vector**vct_ref){
-	for(size_t i=0;i<vct_length(*vct_ref);++i){
-		if(VCT_ITEM_EMPTY(*vct_ref,i))
-			continue;
+	for(size_t i=0;i<vct_length(*vct_ref);++i)
+		vctITEM_DELETE((*vct_ref)->items[i]);
 
-		vctItem_delete((*vct_ref)->items[i]);
-		(*vct_ref)->items[i]=NULL;
-	}
 	free((*vct_ref)->items);
 	free(*vct_ref);
 
 	*vct_ref=vct_create(VCT_LENGTH_MIN);
 }
-void 	vct_remove(struct Vector*vct_ref,size_t index){
-	for(size_t i=0;i<vct_index(vct_ref)-index-1;++i)
-		vct_ref->items[index+i]=vct_ref->items[index+i+1];
-
-	vct_ref->items[vct_index(vct_ref)-1]=NULL;
-	--vct_ref->vector_index;
-}
 void 	vct_delete(struct Vector**vct_ref){
-	for(size_t i=0;i<vct_length(*vct_ref);++i){
-		if(!VCT_ITEM(*vct_ref,i))
-			continue;
+	for(size_t i=0;i<vct_length(*vct_ref);++i)
+		vctITEM_DELETE((*vct_ref)->items[i]);
 
-		//vctItem_delete(&((*vct_ref)->items[i]));
-		vctItem_delete((*vct_ref)->items[i]);
-		(*vct_ref)->items[i]=NULL;
-	}
 	free((*vct_ref)->items);
 	free((*vct_ref));
 }

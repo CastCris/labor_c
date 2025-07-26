@@ -24,13 +24,13 @@ void 	vctItem_replace(struct VectorItem*vct_item_ref,void*item,size_t item_size)
 	memcpy(vct_item_ref->item,item,vctItem_item_size(vct_item_ref));
 }
 //
-/*
+void	vctItem_erase(struct VectorItem*vct_item_ref){
+	free(vct_item_ref->item);
+	vct_item_ref->item=NULL;
+	vct_item_ref->item_size=0;
+}
 void	vctItem_delete(struct VectorItem**vct_item_ref){
 	free((*vct_item_ref)->item);
 	free((*vct_item_ref));
-}
-*/
-void	vctItem_delete(struct VectorItem*vct_item_ref){
-	free(vct_item_ref->item);
-	free(vct_item_ref);
+	(*vct_item_ref)=NULL;
 }

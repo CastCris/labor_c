@@ -19,16 +19,18 @@
 	((vct_ref)->vector_length)
 
 #define VCT_ITEM(vct_ref,index) \
-	(!((vct_ref)->items[(index)])?NULL:vct_item((vct_ref),(index)))
+	vctITEM_ITEM((vct_ref)->items[index])
 
 #define VCT_ITEM_SIZE(vct_ref,index) \
-	(!(VCT_ITEM((vct_ref),(index)))?0:vct_item_size((vct_ref),(index)))
+	((VCT_ITEM_EMPTY((vct_ref),(index)))?0:\
+	 vctITEM_ITEM_SIZE((vct_ref),(index)))
 
 #define VCT_ITEM_PICK(vct_ref,index,src) \
-	(!(VCT_ITEM((vct_ref),(index)))?NULL:vct_item_get((vct_ref),(index),(void**)&(src)))
+	(VCT_ITEM_EMPTY((vct_ref),(index))?NULL:\
+	 vct_item_get((vct_ref),(index),(void**)&(src)))
 
 #define VCT_ITEM_EMPTY(vct_ref,index) \
-	(!(VCT_ITEM((vct_ref),(index))))
+	(vctITEM_ITEM_EMPTY((vct_ref)->items[(index)]))
 // UPT FUNCTIONS
 #define VCT_APPEND(vct_ref,item,item_size) \
 	(vct_append((vct_ref),(void*)(item),(item_size)))
@@ -41,13 +43,14 @@
 
 // DEL FUNCTIONS
 #define VCT_POP(vct_ref,index) \
-	(!(VCT_ITEM((vct_ref),(index)))?NULL:vct_pop((vct_ref),(index)))
+	(!(VCT_ITEM_EMPTY((vct_ref),(index)))?vct_pop((vct_ref),(index)):NULL)
 
 #define VCT_POPUP(vct_ref,index,src) \
-	(!(VCT_ITEM((vct_ref),(index)))?NULL:vct_popup((vct_ref),(index),(void*)&(src)))
+	(!(VCT_ITEM_EMPTY((vct_ref),(index)))?\
+	   vct_popup((vct_ref),(index),(void**)&src):NULL)
 
 #define VCT_WIPE(vct_ref) \
-	(vct_delete((struct Vector**)&(vct_ref)))
+	(vct_delete(&(vct_ref)))
 
 #define VCT_WASH(vct_ref) \
 	(vct_clean((vct_ref)))
