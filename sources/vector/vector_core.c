@@ -14,7 +14,9 @@ struct     Vector*    vct_create(size_t vct_size){
     return vct_new;
 }
 // Check Vector functions
-static void    vct_size_check(struct Vector*vct_ref){
+static void vct_size_check
+(struct Vector*vct_ref)
+{
     if(VCT_INDEX(vct_ref)>=VCT_LENGTH(vct_ref)){
         VCT_LENGTH_INCRASE(vct_ref);
         vct_ref->items=realloc(vct_ref->items,
@@ -25,19 +27,25 @@ static void    vct_size_check(struct Vector*vct_ref){
     }
 }
 // Read
-void    vct_item_get(struct Vector*vct_ref,size_t index,void**src){
+void    __vct_item_get
+(struct Vector*vct_ref,size_t index,void**src)
+{
     *src=malloc(VCT_ITEM_SIZE(vct_ref,index));
     memcpy(*src,VCT_ITEM(vct_ref,index),VCT_ITEM_SIZE(vct_ref,index));
 }
 // Update
-void     vct_append(struct Vector*vct_ref,void*item,size_t item_size){
+void    __vct_append
+(struct Vector*vct_ref,void*item,size_t item_size)
+{
     vct_size_check(vct_ref);
 
     vct_ref->items[VCT_INDEX(vct_ref)]=vctItem_create(item,item_size);
     ++vct_ref->vector_index;
 }
 
-void    vct_insert(struct Vector*vct_ref,size_t index, void*item,size_t item_size){
+void    __vct_insert
+(struct Vector*vct_ref,size_t index, void*item,size_t item_size)
+{
     vct_size_check(vct_ref);
 
     for(size_t i=0;i<VCT_INDEX(vct_ref)-index;++i)
@@ -47,20 +55,26 @@ void    vct_insert(struct Vector*vct_ref,size_t index, void*item,size_t item_siz
     ++vct_ref->vector_index;
 }
 // Delete
-void*    vct_pop(struct Vector*vct_ref,size_t index){
+void*    __vct_pop
+(struct Vector*vct_ref,size_t index)
+{
     void*item;
-    vct_item_get(vct_ref,index,&item);
-    vct_remove(vct_ref,index);
+    __vct_item_get(vct_ref,index,(void**)&item);
+    VCT_REMOVE(vct_ref,index);
 
     return item;
 }
 
-void     vct_popup(struct Vector*vct_ref,size_t index,void**src){
-    vct_item_get(vct_ref,index,src);
-    vct_remove(vct_ref,index);
+void     __vct_popup
+(struct Vector*vct_ref,size_t index,void**src)
+{
+    __vct_item_get(vct_ref,index,src);
+    VCT_REMOVE(vct_ref,index);
 }
 
-void     vct_remove(struct Vector*vct_ref,size_t index){
+void     __vct_remove
+(struct Vector*vct_ref,size_t index)
+{
     vctITEM_DELETE(vct_ref->items[index]);
     for(size_t i=0;i<VCT_INDEX(vct_ref)-index-1;++i)
         vct_ref->items[index+i]=vct_ref->items[index+i+1];
@@ -70,13 +84,17 @@ void     vct_remove(struct Vector*vct_ref,size_t index){
 }
 
 
-void     vct_clean(struct Vector*vct_ref){
+void     __vct_clean
+(struct Vector*vct_ref)
+{
     for(size_t i=0;i<VCT_INDEX(vct_ref);++i)
         vctITEM_ERASE(vct_ref->items[i]);
     vct_ref->vector_index=0;
 }
 
-void     vct_reset(struct Vector**vct_ref){
+void     __vct_reset
+(struct Vector**vct_ref)
+{
     for(size_t i=0;i<VCT_LENGTH(*vct_ref);++i)
         vctITEM_DELETE((*vct_ref)->items[i]);
 
@@ -86,7 +104,8 @@ void     vct_reset(struct Vector**vct_ref){
     *vct_ref=vct_create(VCT_LENGTH_MIN);
 }
 
-void     vct_delete(struct Vector**vct_ref){
+void     __vct_delete
+(struct Vector**vct_ref){
     for(size_t i=0;i<VCT_LENGTH(*vct_ref);++i)
         vctITEM_DELETE((*vct_ref)->items[i]);
 

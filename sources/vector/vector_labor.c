@@ -18,7 +18,7 @@ void vct_fill_str(struct Vector*vct_ref,size_t amount_str){
         char my_str[VCT_TEST_STR_SIZE+1];
         fill_str(my_str,sizeof(my_str)/sizeof(my_str[0]),i);
         //printf("%s\n",my_str);
-        vct_append(vct_ref,(void*)my_str,sizeof(my_str));
+        VCT_APPEND(vct_ref,(void*)my_str,sizeof(my_str));
     }
 }
 
@@ -26,14 +26,14 @@ void vct_insert_str(struct Vector*vct_ref,size_t amount_str,size_t index){
     for(size_t i=0;i<amount_str;++i){
         char my_str[VCT_TEST_STR_SIZE];
         fill_str(my_str,sizeof(my_str)/sizeof(my_str[0]),i);
-        vct_insert(vct_ref,index,my_str,sizeof(my_str)/sizeof(my_str[0]));
+        VCT_INSERT(vct_ref,index,my_str,sizeof(my_str)/sizeof(my_str[0]));
     }
 }
 //
 void vct_str_display(struct Vector*vct_ref){
     for(size_t i=0;i<VCT_INDEX(vct_ref);++i){
         char*copy_str;
-        vct_item_get(vct_ref,i,(void**)&copy_str);
+        VCT_ITEM_PICK(vct_ref,i,copy_str);
         printf("%s ",copy_str);
 
         free(copy_str);

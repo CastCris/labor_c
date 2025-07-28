@@ -10,55 +10,54 @@ struct VectorItem{
 	void*	item;
 	size_t	item_size;
 };
+//
+struct VectorItem*vctItem_create
+(void*item,size_t item_size);
 
 // GET FUNCTIONS
 #define vctITEM_ITEM(vctItem_ref) \
-	(!((vctItem_ref))?NULL:vctItem_item((vctItem_ref)))
+	(__vctItem_item((vctItem_ref)))
 
 #define vctITEM_ITEM_SIZE(vctItem_ref) \
-	(vctITEM_EMPTY((vctItem_ref))?0:vctItem_item_size((vctItem_ref)))
+    (__vctItem_item_size((vctItem_ref)))
 
 #define vctITEM_ITEM_EMPTY(vctItem_ref) \
 	(!vctITEM_ITEM(vctItem_ref))
 
 #define vctITEM_EMPTY(vctItem_ref) \
 	(!(vctItem_ref))
+
+static inline void*	    __vctItem_item
+(struct VectorItem*vct_item_ref)
+{
+    return vctITEM_EMPTY(vct_item_ref)?NULL:vct_item_ref->item;
+}
+
+static inline size_t    __vctItem_item_size
+(struct VectorItem*vct_item_ref)
+{
+    return vctITEM_EMPTY(vct_item_ref)?0:vct_item_ref->item_size;
+}
+
 // UPDATE FUNCTIONS
-#define vctITEM_REPLACE(vctItem_ref,item,item_size) do{ \
-	if (!vctITEM_ITEM_EMPTY((vctItem_ref))) \
-		(vctItem_repalce((vctItem_ref),(void*)(item),item_size)); \
-	else \
-		(vctItem_ref)=vctItem_create((void*)(item),(item_size)); \
-	} while(0);
+#define vctITEM_REPLACE(vctItem_ref,item,item_size) \
+    (__vctItem_replace((vctItem_ref),(item),(item_size)))
+
+void    __vctItem_replace //
+(struct VectorItem*vct_item_ref,void*item,size_t item_size);
 
 // DEL FUNCTIONS
-#define vctITEM_ERASE(vctItem_ref) do { \
-	if (!vctITEM_ITEM_EMPTY((vctItem_ref))) \
-		(vctItem_erase((vctItem_ref))); \
-	}while(0)
+#define vctITEM_ERASE(vctItem_ref) \
+    (__vctItem_erase((vctItem_ref)))
 
-#define vctITEM_DELETE(vctItem_ref) do{ \
-	if (!vctITEM_EMPTY((vctItem_ref))) \
-		(vctItem_delete(&(vctItem_ref))); \
-	} while(0);
+/* */
+#define vctITEM_DELETE(vctItem_ref) \
+    (__vctItem_delete(&(vctItem_ref)))
 
-//
-struct VectorItem*
-vctItem_create(void*item,size_t item_size);
-//
-void*	
-vctItem_item(struct VectorItem*vct_item_ref);
+void    __vctItem_erase // 
+(struct VectorItem*vct_item_ref);
 
-size_t
-vctItem_item_size(struct VectorItem*vct_item_ref);
-//
-void 
-vctItem_replace(struct VectorItem*vct_item_ref,void*item,size_t item_size);
-//
-void 
-vctItem_erase(struct VectorItem*vct_item_ref);
-
-void
-vctItem_delete(struct VectorItem**vct_item_ref);
+void    __vctItem_delete //
+(struct VectorItem**vct_item_ref);
 
 #endif

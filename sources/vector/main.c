@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include"vector.h"
 //
-int main(){
+void vector(){
     struct Vector*tst=vct_create(1);
     vct_fill_str(tst,10);
     vct_str_display(tst);
@@ -68,9 +68,8 @@ int main(){
     free(my_str);
     free(my_str2);
     free(replace);
-
-    return 0;
 }
+
 /*
 //How declare a void**
 int main(){

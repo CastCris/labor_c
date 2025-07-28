@@ -4,11 +4,15 @@
 #include"vector_core.h"
 //
 #ifdef EXTRA
-#define VECTOR_EXTRA
+#   define VECTOR_EXTRA
 #endif
 
 #ifdef SAFE
-#define VECTOR_SAFER
+#   define VECTOR_SAFER
+#endif
+
+#ifdef DEBUG
+#   define VECTOR_DEBUG
 #endif
 
 #ifdef VECTOR_EXTRA
